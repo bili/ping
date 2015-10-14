@@ -1,2 +1,2 @@
 # ping
-Check web can read
+Check web can read by Javascript.
