@@ -1,2 +1,2 @@
 # ping
-Check web can read by Javascript.
+Check whether web can be reached via JS.
