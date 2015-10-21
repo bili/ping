@@ -11,25 +11,38 @@
 
 <body>
     <div class="wrapper">
-        <table>
+        <table border="1">
             <tr>
-                <td><label>客戶端平台：</label></td>
-                <td><span id="platform"></span> </td></tr>
+                <td align="right">
+                    <label>客戶端平台：</label>
+                </td>
+                <td><span id="platform"></span> </td>
+            </tr>
             <tr>
-                <td><label>客戶端瀏覽器：</label></td>
-                <td><span id="browser"></span></td></tr>
+                <td align="right">
+                    <label>客戶端瀏覽器：</label>
+                </td>
+                <td><span id="browser"></span></td>
+            </tr>
             <tr>
-                <td><label>User Agent：</label></td>
-                <td><span id="ua"></span></td></tr>
+                <td align="right" valign="top">
+                    <label>User Agent：</label>
+                </td>
+                <td><span id="ua"></span></td>
+            </tr>
             <tr>
-                <td><label>Cookie啟用狀態：</label></td>
-                <td><span id="cookieEnabled"></span></td></tr>
-            <tr><td>
-<label>連接狀態：</label>
-</td>
-<td>
-    <button id="connect">嘗試連接</button><span id="connect-status"></span>
-            </td></tr>
+                <td align="right">
+                    <label>Cookie啟用狀態：</label>
+                </td>
+                <td><span id="cookieEnabled"></span></td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <label>連接狀態：</label>
+                </td>
+                <td>
+                    <button id="connect">嘗試連接</button><span id="connect-status"></span></td>
+            </tr>
         </table>
     </div>
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>

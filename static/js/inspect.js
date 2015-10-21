@@ -37,9 +37,13 @@
         return navigator.cookieEnabled;
     };
 
+    Inspect.prototype.getSystem = function() {
+        return navigator.cookieEnabled;
+    };
+
     Inspect.prototype.ping = function(url, opts) {
         var isOk = false;
-        var maxCount = 3;
+        var maxCount = 5;
         opts.delay = opts.delay || 1000;
         if (opts.beforePing) opts.beforePing.call(this);
         var timeout = setTimeout(function() {

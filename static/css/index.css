@@ -2,23 +2,34 @@ html,
 body {
     margin: 0;
     padding: 0;
+    color: #333;
     background: #eee;
     font-size: 13px;
     /*font-family: "Microsoft YaHei";*/
 }
+
 .wrapper {
-    width: 800px;
+    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background: white;
 }
+
+table {
+    border: none;
+    border-collapse: collapse;
+}
+
 ul {
     margin: 0;
     padding: 0;
 }
 
-li {
-    padding: 5px;
+td {
+    padding: 5px 10px;
     list-style: none;
 }
-#connect-status {margin-left: 10px;}
+
+#connect-status {
+    margin-left: 10px;
+}
