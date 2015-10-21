@@ -5,18 +5,33 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo</title>
-    <style>
-    html,
-    body {
-        font-size: 13px;
-    }
-    </style>
+    <title>Inspect Client</title>
+    <link rel="stylesheet" type="text/css" href="static/css/index.css">
 </head>
 
 <body>
-    <label>连接状态：</label>
-    <button id="connect">尝试连接</button>&nbsp;<span id="connect-status"></span>
+    <div class="wrapper">
+        <table>
+            <tr>
+                <td><label>客戶端平台：</label></td>
+                <td><span id="platform"></span> </td></tr>
+            <tr>
+                <td><label>客戶端瀏覽器：</label></td>
+                <td><span id="browser"></span></td></tr>
+            <tr>
+                <td><label>User Agent：</label></td>
+                <td><span id="ua"></span></td></tr>
+            <tr>
+                <td><label>Cookie啟用狀態：</label></td>
+                <td><span id="cookieEnabled"></span></td></tr>
+            <tr><td>
+<label>連接狀態：</label>
+</td>
+<td>
+    <button id="connect">嘗試連接</button><span id="connect-status"></span>
+            </td></tr>
+        </table>
+    </div>
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="static/js/inspect.js"></script>
     <script src="static/js/index.js"></script>

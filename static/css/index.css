@@ -2,45 +2,23 @@ html,
 body {
     margin: 0;
     padding: 0;
+    background: #eee;
     font-size: 13px;
-    font-family: "Microsoft YaHei";
+    /*font-family: "Microsoft YaHei";*/
+}
+.wrapper {
+    width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+}
+ul {
+    margin: 0;
+    padding: 0;
 }
 
-.clientInfo-wrapper {
-    width: 600px;
-    margin: 0 auto;
-    padding: 10px 0 0 0;
-    color: #333;
-    background: #f6f6f6 url(../images/scissors.png) top right no-repeat;
+li {
+    padding: 5px;
+    list-style: none;
 }
-.clientInfo-wrapper2 {
-    margin: 30px;
-    padding: 20px;
-    display: inline-block;
-    border: 1px dashed silver;
-}
-.clientInfo {
-    border-collapse: collapse;
-}
-.clientInfo td {
-    padding: 5px 10px;
-}
-.clientInfo-wrapper h1 {
-    color: #666;
-    text-align: center;
-}
-.tip {
-    padding: 20px;
-    color: white;
-    background: #F9BC32;
-    clear: both;
-}
-.tip img {
-    float: left;
-    width: 30px;
-    height: 30px;
-    margin-right: 20px;
-}
-.tip span {
-    line-height: 1.5;
-}
+#connect-status {margin-left: 10px;}
