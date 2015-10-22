@@ -28,7 +28,69 @@
             // 瀏覽器原始user agent
             UA: ua,
             browser: (function() {
+                var browserName = nav.appName;
+                var fullVersion = '' + parseFloat(nav.appVersion);
+                var majorVersion = parseInt(nav.appVersion, 10);
+                var nameOffset, verOffset, ix;
 
+                // In Opera 15+, the true version is after "OPR/" 
+                if ((verOffset = ua.indexOf("OPR/")) != -1) {
+                    browserName = "Opera";
+                    fullVersion = ua.substring(verOffset + 4);
+                }
+                // In older Opera, the true version is after "Opera" or after "Version"
+                else if ((verOffset = ua.indexOf("Opera")) != -1) {
+                    browserName = "Opera";
+                    fullVersion = ua.substring(verOffset + 6);
+                    if ((verOffset = ua.indexOf("Version")) != -1)
+                        fullVersion = ua.substring(verOffset + 8);
+                }
+                // In MSIE, the true version is after "MSIE" in userAgent
+                else if ((verOffset = ua.indexOf("MSIE")) != -1) {
+                    browserName = "Microsoft Internet Explorer";
+                    fullVersion = ua.substring(verOffset + 5);
+                }
+                // In Chrome, the true version is after "Chrome" 
+                else if ((verOffset = ua.indexOf("Chrome")) != -1) {
+                    browserName = "Chrome";
+                    fullVersion = ua.substring(verOffset + 7);
+                }
+                // In Safari, the true version is after "Safari" or after "Version" 
+                else if ((verOffset = ua.indexOf("Safari")) != -1) {
+                    browserName = "Safari";
+                    fullVersion = ua.substring(verOffset + 7);
+                    if ((verOffset = ua.indexOf("Version")) != -1)
+                        fullVersion = ua.substring(verOffset + 8);
+                }
+                // In Firefox, the true version is after "Firefox" 
+                else if ((verOffset = ua.indexOf("Firefox")) != -1) {
+                    browserName = "Firefox";
+                    fullVersion = ua.substring(verOffset + 8);
+                }
+                // In most other browsers, "name/version" is at the end of userAgent 
+                else if ((nameOffset = ua.lastIndexOf(' ') + 1) <
+                    (verOffset = ua.lastIndexOf('/'))) {
+                    browserName = ua.substring(nameOffset, verOffset);
+                    fullVersion = ua.substring(verOffset + 1);
+                    if (browserName.toLowerCase() == browserName.toUpperCase()) {
+                        browserName = nav.appName;
+                    }
+                }
+                // trim the fullVersion string at semicolon/space if present
+                if ((ix = fullVersion.indexOf(";")) != -1)
+                    fullVersion = fullVersion.substring(0, ix);
+                if ((ix = fullVersion.indexOf(" ")) != -1)
+                    fullVersion = fullVersion.substring(0, ix);
+
+                majorVersion = parseInt('' + fullVersion, 10);
+                if (isNaN(majorVersion)) {
+                    fullVersion = '' + parseFloat(nav.appVersion);
+                    majorVersion = parseInt(nav.appVersion, 10);
+                }
+                return {
+                    name: browserName,
+                    ver: fullVersion
+                };
             }()),
             // Cookie是否啟用
             isCookieEnabled: nav.cookieEnabled,
