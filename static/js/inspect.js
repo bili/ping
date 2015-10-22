@@ -1,58 +1,60 @@
 (function() {
     var Inspect = function() {
-        var _self = this;
-        this._nav = navigator;
-        this._ua = this._nav.userAgent;
-        this._appVersion = this._nav.userAgent;
-        this._browser = {
+        var self = this;
+        var nav = navigator;
+        var ua = nav.userAgent;
+        var appVersion = nav.userAgent;
+        var browser = {
             versions: function() {
-                var u = _self._ua;
                 return { //移动终端浏览器版本信息
-                    trident: u.indexOf('Trident') > -1, //IE内核
-                    presto: u.indexOf('Presto') > -1, //opera内核
-                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
-                    iPad: u.indexOf('iPad') > -1, //是否iPad
-                    webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
-                    wechat: u.indexOf('MicroMessenger') > -1 //是否微信內置瀏覽器
+                    trident: ua.indexOf('Trident') > -1, //IE内核
+                    presto: ua.indexOf('Presto') > -1, //opera内核
+                    webKit: ua.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                    gecko: ua.indexOf('Gecko') > -1 && ua.indexOf('KHTML') == -1, //火狐内核
+                    mobile: !!ua.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                    ios: !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: ua.indexOf('Android') > -1 || ua.indexOf('Linux') > -1, //android终端或uc浏览器
+                    iPhone: ua.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                    iPad: ua.indexOf('iPad') > -1, //是否iPad
+                    webApp: ua.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                    wechat: ua.indexOf('MicroMessenger') > -1 //是否微信內置瀏覽器
                 };
             }(),
-            language: (this._nav.browserLanguage || this._nav.language).toLowerCase()
+            language: (nav.browserLanguage || nav.language).toLowerCase()
         };
         return {
             // 終端是否為手機
-            isMobile: (function(_self) {
-                if (_self._browser.versions['mobile']) return true;
+            isMobile: (function() {
+                if (browser.versions['mobile']) return true;
                 return false;
-            }(this)),
+            }()),
             // 瀏覽器原始user agent
-            UA: (function(_self) {
-                return _self._ua;
-            }(this)),
+            UA: (function() {
+                return ua;
+            }()),
             // Cookie是否啟用
-            isCookieEnabled: (function(_self) {
-                return _self._nav.cookieEnabled;
-            }(this)),
+            isCookieEnabled: (function() {
+                return nav.cookieEnabled;
+            }()),
             // 客戶端系統
-            platform: (function(_self) {
-                return _self._nav.platform;
-            }(this)),
+            platform: (function() {
+                return nav.platform;
+            }()),
             // 瀏覽器語言
-            language: (function(_self) {
-                return _self._nav.language;
-            }(this)),
+            language: (function() {
+                return nav.language;
+            }()),
             // 是否支持并启用了DNT
-            isDNT: (function(_self) {
-                return _self._nav.doNotTrack == 1 ? true : false;
-            }(this)),
+            isDNT: (function() {
+                return nav.doNotTrack == 1 ? true : false;
+            }()),
             // 是否支持并启用了Java
-            isJavaEnabled: (function(_self) {
-                return _self._nav.javaEnabled;
-            }(this)),
+            isJavaEnabled: (function() {
+                return nav.javaEnabled;
+            }()),
+            online: (function() {
+                return nav.onLine;
+            }()),
             ping: function(url, opts) {
                 var isOk = false;
                 var maxCount = 5;
