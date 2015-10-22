@@ -1,8 +1,9 @@
 (function() {
     var Inspect = function() {
         var _self = this;
-        this._ua = navigator.userAgent;
-        this._appVersion = navigator.userAgent;
+        this._nav = navigator;
+        this._ua = this._nav.userAgent;
+        this._appVersion = this._nav.userAgent;
         this._browser = {
             versions: function() {
                 var u = _self._ua;
@@ -20,60 +21,73 @@
                     wechat: u.indexOf('MicroMessenger') > -1 //是否微信內置瀏覽器
                 };
             }(),
-            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+            language: (this._nav.browserLanguage || this._nav.language).toLowerCase()
         };
-    };
-
-    Inspect.prototype.isMobile = function() {
-        if (this._browser.versions['mobile']) return true;
-        return false;
-    };
-
-    Inspect.prototype.getUA = function() {
-        return this._ua;
-    };
-
-    Inspect.prototype.isCookieEnabled = function() {
-        return navigator.cookieEnabled;
-    };
-
-    Inspect.prototype.getSystem = function() {
-        return navigator.cookieEnabled;
-    };
-
-    Inspect.prototype.ping = function(url, opts) {
-        var isOk = false;
-        var maxCount = 5;
-        opts.delay = opts.delay || 1000;
-        if (opts.beforePing) opts.beforePing.call(this);
-        var timeout = setTimeout(function() {
-            var fn = arguments.callee;
-            if (isOk) {
-                if (opts.afterPing) opts.afterPing.call(this, true);
-                clearInterval(timeout);
-            } else {
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    cache: false,
-                    beforeSend: function() {},
-                    complete: function(XMLHttpRequest, textStatus) {
-                        if (XMLHttpRequest.status == 200) {
-                            isOk = true;
-                            fn.call(fn);
-                        } else {
-                            if (--maxCount < 1) {
-                                if (opts.afterPing) opts.afterPing.call(this, false, XMLHttpRequest, textStatus);
-                                return;
+        return {
+            // 終端是否為手機
+            isMobile: (function(_self) {
+                if (_self._browser.versions['mobile']) return true;
+                return false;
+            }(this)),
+            // 瀏覽器原始user agent
+            UA: (function(_self) {
+                return _self._ua;
+            }(this)),
+            // Cookie是否啟用
+            isCookieEnabled: (function(_self) {
+                return _self._nav.cookieEnabled;
+            }(this)),
+            // 客戶端系統
+            platform: (function(_self) {
+                return _self._nav.platform;
+            }(this)),
+            // 瀏覽器語言
+            language: (function(_self) {
+                return _self._nav.language;
+            }(this)),
+            // 是否支持并启用了DNT
+            isDNT: (function(_self) {
+                return _self._nav.doNotTrack == 1 ? true : false;
+            }(this)),
+            // 是否支持并启用了Java
+            isJavaEnabled: (function(_self) {
+                return _self._nav.javaEnabled;
+            }(this)),
+            ping: function(url, opts) {
+                var isOk = false;
+                var maxCount = 5;
+                opts.delay = opts.delay || 1000;
+                if (opts.beforePing) opts.beforePing.call(this);
+                var timeout = setTimeout(function() {
+                    var fn = arguments.callee;
+                    if (isOk) {
+                        if (opts.afterPing) opts.afterPing.call(this, true);
+                        clearInterval(timeout);
+                    } else {
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            cache: false,
+                            beforeSend: function() {},
+                            complete: function(XMLHttpRequest, textStatus) {
+                                if (XMLHttpRequest.status == 200) {
+                                    isOk = true;
+                                    fn.call(fn);
+                                } else {
+                                    if (--maxCount < 1) {
+                                        if (opts.afterPing) opts.afterPing.call(this, false, XMLHttpRequest, textStatus);
+                                        return;
+                                    }
+                                    setTimeout(function() {
+                                        fn.call(fn);
+                                    }, opts.delay);
+                                }
                             }
-                            setTimeout(function() {
-                                fn.call(fn);
-                            }, opts.delay);
-                        }
+                        });
                     }
-                });
+                }, 1000);
             }
-        }, 1000);
+        };
     };
 
     root = typeof exports !== "undefined" && exports !== null ? exports : window;
