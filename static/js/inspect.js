@@ -27,6 +27,9 @@
             isMobile: browser.versions['mobile'] ? true : false,
             // 瀏覽器原始user agent
             UA: ua,
+            browser: (function() {
+
+            }()),
             // Cookie是否啟用
             isCookieEnabled: nav.cookieEnabled,
             // 客戶端系統
@@ -37,7 +40,21 @@
             isDNT: nav.doNotTrack == 1 ? true : false,
             // 是否支持并启用了Java
             isJavaEnabled: nav.javaEnabled,
+            // 是否連接網絡
             online: nav.onLine,
+            // 屏幕分辨率
+            screen: (function() {
+                return {
+                    width: screen.width,
+                    height: screen.height
+                }
+            }()),
+            // 屏幕是否為豎屏
+            isPortrait: (function() {
+                var b = window.matchMedia("(orientation: portrait)");
+                if (b.matches) return true;
+                return false;
+            }()),
             ping: function(url, opts) {
                 var isOk = false;
                 var maxCount = 5;

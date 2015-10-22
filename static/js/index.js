@@ -8,7 +8,9 @@ $(function() {
     $('#javaEnabled').text(inspect.isJavaEnabled ? "已启用" : "已禁用");
     $('#isDNT').text(inspect.isDNT ? "已启用" : "已禁用");
     $('#date').text(new Date());
-    $('#online').text(inspect.online ? '在線': '離線');
+    $('#online').text(inspect.online ? '在線' : '離線');
+    $('#resolution').text(inspect.screen.width + 'px(w) * ' + inspect.screen.height +'px(h)');
+    $('#orientation').text(inspect.isPortrait ? '豎屏' : '橫屏');
     $('#connect').on('click', function() {
         var url = '/';
         var $btn = $(this);
