@@ -24,37 +24,20 @@
         };
         return {
             // 終端是否為手機
-            isMobile: (function() {
-                if (browser.versions['mobile']) return true;
-                return false;
-            }()),
+            isMobile: browser.versions['mobile'] ? true : false,
             // 瀏覽器原始user agent
-            UA: (function() {
-                return ua;
-            }()),
+            UA: ua,
             // Cookie是否啟用
-            isCookieEnabled: (function() {
-                return nav.cookieEnabled;
-            }()),
+            isCookieEnabled: nav.cookieEnabled,
             // 客戶端系統
-            platform: (function() {
-                return nav.platform;
-            }()),
+            platform: nav.platform,
             // 瀏覽器語言
-            language: (function() {
-                return nav.language;
-            }()),
+            language: nav.language,
             // 是否支持并启用了DNT
-            isDNT: (function() {
-                return nav.doNotTrack == 1 ? true : false;
-            }()),
+            isDNT: nav.doNotTrack == 1 ? true : false,
             // 是否支持并启用了Java
-            isJavaEnabled: (function() {
-                return nav.javaEnabled;
-            }()),
-            online: (function() {
-                return nav.onLine;
-            }()),
+            isJavaEnabled: nav.javaEnabled,
+            online: nav.onLine,
             ping: function(url, opts) {
                 var isOk = false;
                 var maxCount = 5;
