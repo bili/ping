@@ -1,19 +1,20 @@
 $(function() {
-    var inpect = new Inspect();
-    $('#platform').text(inpect.platform);
-    $('#device').text(Inspect.isMobile ? 'Mobile' : 'PC');
-    $('#ua').text(inpect.UA);
-    $('#lanuage').text(inpect.language);
-    $('#cookieEnabled').text(inpect.isCookieEnabled ? "已启用" : "已禁用");
-    $('#javaEnabled').text(inpect.isJavaEnabled ? "已启用" : "已禁用");
-    $('#isDNT').text(inpect.isDNT ? "已启用" : "已禁用");
+    var inspect = new Inspect();
+    $('#platform').text(inspect.platform);
+    $('#device').text(inspect.isMobile ? 'Mobile' : 'PC');
+    $('#ua').text(inspect.UA);
+    $('#lanuage').text(inspect.language);
+    $('#cookieEnabled').text(inspect.isCookieEnabled ? "已启用" : "已禁用");
+    $('#javaEnabled').text(inspect.isJavaEnabled ? "已启用" : "已禁用");
+    $('#isDNT').text(inspect.isDNT ? "已启用" : "已禁用");
     $('#date').text(new Date());
+    $('#online').text(inspect.online ? '在線': '離線');
     $('#connect').on('click', function() {
         var url = '/';
         var $btn = $(this);
         var $status = $('#connect-status');
         var timeout;
-        inpect.ping(url, {
+        inspect.ping(url, {
             beforePing: function() {
                 var dots = ['', '.', '..', '...'];
                 var count = 0;
