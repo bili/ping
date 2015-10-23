@@ -1,5 +1,4 @@
 $(function() {
-    var inspect = new Inspect();
     $('#platform').text(inspect.platform);
     $('#device').text(inspect.isMobile ? 'Mobile' : 'PC');
     $('#browser').text(inspect.browser.name + ' ' + inspect.browser.ver);
@@ -10,8 +9,9 @@ $(function() {
     $('#isDNT').text(inspect.isDNT ? "已启用" : "已禁用");
     $('#date').text(new Date());
     $('#online').text(inspect.online ? '在線' : '離線');
-    $('#resolution').text(inspect.screen.width + 'px(w) * ' + inspect.screen.height + 'px(h)');
-    $('#orientation').text(inspect.isPortrait ? '豎屏' : '橫屏');
+    $('#resolution').text(inspect.screen.width + 'px(寬) * ' + inspect.screen.height + 'px(高)');
+    $('#orientation').text(inspect.isPortrait != -1 ? (inspect.isPortrait ? '豎屏' : '橫屏') : '未知');
+    $('#devicePixelRatio').text(inspect.devicePixelRatio != -1 ? inspect.devicePixelRatio : '未知');
     $('#connect').on('click', function() {
         var url = 'http://www.dib66.com/';
         var $btn = $(this);

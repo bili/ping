@@ -1,5 +1,5 @@
 (function() {
-    var Inspect = function() {
+    var inspect = new function() {
         var self = this;
         var nav = navigator;
         var ua = nav.userAgent;
@@ -33,8 +33,28 @@
                 var majorVersion = parseInt(nav.appVersion, 10);
                 var nameOffset, verOffset, ix;
 
+                // In MSIE, the true version is after "MSIE" in userAgent
+                if ((verOffset = ua.indexOf("Edge")) != -1) {
+                    browserName = "Microsoft Edge";
+                    fullVersion = ua.substring(verOffset + 5);
+                }
+                // In MSIE, the true version is after "MSIE" in userAgent
+                else if ((verOffset = ua.indexOf("MSIE")) != -1) {
+                    browserName = "Microsoft Internet Explorer";
+                    fullVersion = ua.substring(verOffset + 5);
+                }
+                // In Firefox, the true version is after "Firefox" 
+                else if ((verOffset = ua.indexOf("Firefox")) != -1) {
+                    browserName = "Firefox";
+                    fullVersion = ua.substring(verOffset + 8);
+                }
+                // In MSIE, the true version is after "MSIE" in userAgent
+                else if ((verOffset = ua.indexOf("rv")) != -1) {
+                    browserName = "Microsoft Internet Explorer";
+                    fullVersion = ua.substr(verOffset + 3, 4);
+                }
                 // In Opera 15+, the true version is after "OPR/" 
-                if ((verOffset = ua.indexOf("OPR/")) != -1) {
+                else if ((verOffset = ua.indexOf("OPR/")) != -1) {
                     browserName = "Opera";
                     fullVersion = ua.substring(verOffset + 4);
                 }
@@ -44,11 +64,6 @@
                     fullVersion = ua.substring(verOffset + 6);
                     if ((verOffset = ua.indexOf("Version")) != -1)
                         fullVersion = ua.substring(verOffset + 8);
-                }
-                // In MSIE, the true version is after "MSIE" in userAgent
-                else if ((verOffset = ua.indexOf("MSIE")) != -1) {
-                    browserName = "Microsoft Internet Explorer";
-                    fullVersion = ua.substring(verOffset + 5);
                 }
                 // In Chrome, the true version is after "Chrome" 
                 else if ((verOffset = ua.indexOf("Chrome")) != -1) {
@@ -61,11 +76,6 @@
                     fullVersion = ua.substring(verOffset + 7);
                     if ((verOffset = ua.indexOf("Version")) != -1)
                         fullVersion = ua.substring(verOffset + 8);
-                }
-                // In Firefox, the true version is after "Firefox" 
-                else if ((verOffset = ua.indexOf("Firefox")) != -1) {
-                    browserName = "Firefox";
-                    fullVersion = ua.substring(verOffset + 8);
                 }
                 // In most other browsers, "name/version" is at the end of userAgent 
                 else if ((nameOffset = ua.lastIndexOf(' ') + 1) <
@@ -95,11 +105,16 @@
             // Cookie是否啟用
             isCookieEnabled: nav.cookieEnabled,
             // 客戶端系統
-            platform: nav.platform,
+            platform: (function() {
+                return nav.platform + (' ' + (nav.cpuClass || ''))
+            }()),
             // 瀏覽器語言
             language: nav.language,
             // 是否支持并启用了DNT
-            isDNT: nav.doNotTrack == 1 ? true : false,
+            isDNT: (function() {
+                if (typeof doNotTrack != 'undefined') return doNotTrack == 1 ? true : false
+                return nav.doNotTrack == 1 ? true : false
+            }()),
             // 是否支持并启用了Java
             isJavaEnabled: nav.javaEnabled,
             // 是否連接網絡
@@ -113,6 +128,7 @@
             }()),
             // 屏幕是否為豎屏
             isPortrait: (function() {
+                if (!window.matchMedia) return -1;
                 var b = window.matchMedia("(orientation: portrait)");
                 if (b.matches) return true;
                 return false;
@@ -150,11 +166,13 @@
                         });
                     }
                 }, 1000);
-            }
+            },
+            // 设备上物理像素和设备独立像素(device-independent pixels (dips))的比例
+            devicePixelRatio: window.devicePixelRatio ? window.devicePixelRatio : -1
         };
     };
 
     root = typeof exports !== "undefined" && exports !== null ? exports : window;
-    root.Inspect = Inspect;
+    root.inspect = inspect;
 
 }());
