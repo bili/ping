@@ -1,23 +1,23 @@
 $(function() {
-    $('#platform').text(inspect.platform);
-    $('#device').text(inspect.isMobile ? 'Mobile' : 'PC');
-    $('#browser').text(inspect.browser.name + ' ' + inspect.browser.ver);
-    $('#ua').text(inspect.UA);
-    $('#lanuage').text(inspect.language);
-    $('#cookieEnabled').text(inspect.isCookieEnabled ? "已启用" : "已禁用");
-    $('#javaEnabled').text(inspect.isJavaEnabled ? "已启用" : "已禁用");
-    $('#isDNT').text(inspect.isDNT ? "已启用" : "已禁用");
+    $('#platform').text(Inspect.platform);
+    $('#device').text(Inspect.isMobile ? 'Mobile' : 'PC');
+    $('#browser').text(Inspect.browser.name + ' ' + Inspect.browser.ver);
+    $('#ua').text(Inspect.UA);
+    $('#lanuage').text(Inspect.language);
+    $('#cookieEnabled').text(Inspect.isCookieEnabled ? "已启用" : "已禁用");
+    $('#javaEnabled').text(Inspect.isJavaEnabled ? "已启用" : "已禁用");
+    $('#isDNT').text(Inspect.isDNT ? "已启用" : "已禁用");
     $('#date').text(new Date());
-    $('#online').text(inspect.online ? '在線' : '離線');
-    $('#resolution').text(inspect.screen.width + 'px(寬) * ' + inspect.screen.height + 'px(高)');
-    $('#orientation').text(inspect.isPortrait != -1 ? (inspect.isPortrait ? '豎屏' : '橫屏') : '未知');
-    $('#devicePixelRatio').text(inspect.devicePixelRatio != -1 ? inspect.devicePixelRatio : '未知');
+    $('#online').text(Inspect.online ? '在線' : '離線');
+    $('#resolution').text(Inspect.screen.width + 'px(寬) * ' + Inspect.screen.height + 'px(高)');
+    $('#orientation').text(Inspect.isPortrait != -1 ? (Inspect.isPortrait ? '豎屏' : '橫屏') : '未知');
+    $('#devicePixelRatio').text(Inspect.devicePixelRatio != -1 ? Inspect.devicePixelRatio : '未知');
     $('#connect').on('click', function() {
         var url = 'http://www.dib66.com/';
         var $btn = $(this);
         var $status = $('#connect-status');
         var timeout;
-        inspect.ping(url, {
+        Inspect.ping(url, {
             beforePing: function() {
                 var dots = ['', '.', '..', '...'];
                 var count = 0;

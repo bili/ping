@@ -1,5 +1,5 @@
 (function() {
-    var inspect = new function() {
+    var Inspect = new function() {
         var self = this;
         var nav = navigator;
         var ua = nav.userAgent;
@@ -173,6 +173,6 @@
     };
 
     root = typeof exports !== "undefined" && exports !== null ? exports : window;
-    root.inspect = inspect;
+    root.Inspect = Inspect;
 
 }());
