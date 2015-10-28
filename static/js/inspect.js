@@ -172,7 +172,7 @@
         };
     };
 
-    root = typeof exports !== "undefined" && exports !== null ? exports : window;
+    var root = typeof exports !== "undefined" && exports !== null ? exports : window;
     root.Inspect = Inspect;
 
 }());
