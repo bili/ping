@@ -3,7 +3,7 @@
         var self = this;
         var nav = navigator;
         var ua = nav.userAgent;
-        var appVersion = nav.userAgent;
+        var appVersion = nav.appVersion;
         var browser = {
             versions: function() {
                 return { //移动终端浏览器版本信息
@@ -22,6 +22,9 @@
             }(),
             language: (nav.browserLanguage || nav.language).toLowerCase()
         };
+        var _track = 'track' in document.createElement('track');
+        var webstoreKeysLength = window.chrome && window.chrome.webstore ? Object.keys(window.chrome.webstore).length : 0;
+
         return {
             // 終端是否為手機
             isMobile: browser.versions['mobile'] ? true : false,
@@ -32,13 +35,20 @@
                 var fullVersion = '' + parseFloat(nav.appVersion);
                 var majorVersion = parseInt(nav.appVersion, 10);
                 var nameOffset, verOffset, ix;
-
-                // In MSIE, the true version is after "MSIE" in userAgent
-                if ((verOffset = ua.indexOf("Edge")) != -1) {
+                // alert(window.navigator.webkitPersistentStorage);
+                if ((verOffset = ua.indexOf("QIHU 360SE")) != -1) {
+                    browserName = "360 browser" + (ua.indexOf("NET CLR") != -1 ? '（兼容模式）' : '');
+                    fullVersion = '';
+                } else if ((verOffset = ua.indexOf("SE")) != -1) {
+                    browserName = "Sougou browser" + (ua.indexOf("NET CLR") != -1 ? '（兼容模式）' : '');
+                    fullVersion = '';
+                } else if ((verOffset = ua.indexOf("QQ")) != -1) {
+                    browserName = "QQ browser" + (ua.indexOf("NET CLR") != -1 ? '（兼容模式）' : '');
+                    fullVersion = '';
+                } else if ((verOffset = ua.indexOf("Edge")) != -1) {
                     browserName = "Microsoft Edge";
                     fullVersion = ua.substring(verOffset + 5);
                 }
-                // In MSIE, the true version is after "MSIE" in userAgent
                 else if ((verOffset = ua.indexOf("MSIE")) != -1) {
                     browserName = "Microsoft Internet Explorer";
                     fullVersion = ua.substring(verOffset + 5);
@@ -67,8 +77,13 @@
                 }
                 // In Chrome, the true version is after "Chrome" 
                 else if ((verOffset = ua.indexOf("Chrome")) != -1) {
-                    browserName = "Chrome";
-                    fullVersion = ua.substring(verOffset + 7);
+                    if (window.navigator.webkitPersistentStorage) {
+                        browserName = "Chrome";
+                        fullVersion = ua.substring(verOffset + 7);
+                    } else {
+                        browserName = "360 browser";
+                        fullVersion = '';
+                    }
                 }
                 // In Safari, the true version is after "Safari" or after "Version" 
                 else if ((verOffset = ua.indexOf("Safari")) != -1) {
@@ -93,7 +108,7 @@
                     fullVersion = fullVersion.substring(0, ix);
 
                 majorVersion = parseInt('' + fullVersion, 10);
-                if (isNaN(majorVersion)) {
+                if ($.trim(fullVersion) != '' && isNaN(majorVersion)) {
                     fullVersion = '' + parseFloat(nav.appVersion);
                     majorVersion = parseInt(nav.appVersion, 10);
                 }
