@@ -3,7 +3,7 @@ $(function() {
     $('#device').text(Inspect.isMobile ? 'Mobile' : 'PC');
     $('#browser').text(Inspect.browser.name + ' ' + Inspect.browser.ver);
     $('#ua').text(Inspect.UA);
-    $('#lanuage').text(Inspect.language);
+    $('#lanuage').text(Inspect.language ? Inspect.language : '未知');
     $('#cookieEnabled').text(Inspect.isCookieEnabled ? "已启用" : "已禁用");
     $('#javaEnabled').text(Inspect.isJavaEnabled ? "已启用" : "已禁用");
     $('#isDNT').text(Inspect.isDNT ? "已启用" : "已禁用");

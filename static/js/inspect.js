@@ -22,9 +22,6 @@
             }(),
             language: (nav.browserLanguage || nav.language).toLowerCase()
         };
-        var _track = 'track' in document.createElement('track');
-        var webstoreKeysLength = window.chrome && window.chrome.webstore ? Object.keys(window.chrome.webstore).length : 0;
-
         return {
             // 終端是否為手機
             isMobile: browser.versions['mobile'] ? true : false,
@@ -35,7 +32,6 @@
                 var fullVersion = '' + parseFloat(nav.appVersion);
                 var majorVersion = parseInt(nav.appVersion, 10);
                 var nameOffset, verOffset, ix;
-                // alert(window.navigator.webkitPersistentStorage);
                 if ((verOffset = ua.indexOf("QIHU 360SE")) != -1) {
                     browserName = "360 browser" + (ua.indexOf("NET CLR") != -1 ? '（兼容模式）' : '');
                     fullVersion = '';
@@ -77,13 +73,8 @@
                 }
                 // In Chrome, the true version is after "Chrome" 
                 else if ((verOffset = ua.indexOf("Chrome")) != -1) {
-                    if (window.navigator.webkitPersistentStorage) {
-                        browserName = "Chrome";
-                        fullVersion = ua.substring(verOffset + 7);
-                    } else {
-                        browserName = "360 browser";
-                        fullVersion = '';
-                    }
+                    browserName = "Chrome";
+                    fullVersion = ua.substring(verOffset + 7);
                 }
                 // In Safari, the true version is after "Safari" or after "Version" 
                 else if ((verOffset = ua.indexOf("Safari")) != -1) {
@@ -124,7 +115,7 @@
                 return nav.platform + (' ' + (nav.cpuClass || ''))
             }()),
             // 瀏覽器語言
-            language: nav.language,
+            language: nav.language || nav.userLanguage,
             // 是否支持并启用了DNT
             isDNT: (function() {
                 if (typeof doNotTrack != 'undefined') return doNotTrack == 1 ? true : false
